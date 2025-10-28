@@ -1,53 +1,58 @@
 ```mermaid
 erDiagram
-    buku {
-        string code
-        string title
-        string writer
-        int tahun_terbit
-        int id_kategori
+    staff {
+       id INT
+       name VARCHAR(20)
+       gender VARCHAR(10)
+       duty_time TIME
+       duty_date DATE
     }
 
-    kategori {
-        int id
-        string name
+    borrower {
+        id INT 
+        name VARCHAR(20)
+        gender VARCHAR(10)
+        address TEXT
     }
 
-    rak_buku {
-        string code
-        int id_kategori
+    category {
+        id INT
+        name VARCHAR(20)
     }
 
-    petugas {
-        int id
-        string name
-        string gender
-        time jam_tugas
-        date tanggal_tugas
+    bookshelf {
+        code VARCHAR(10)
+        category_id INT
     }
 
-    peminjam {
-        int id
-        string name
-        string gender
-        string address
-        int total_denda
+    books {
+        id INT
+        title VARCHAR(100)
+        author VARCHAR(50)
+        publication_year INT
+        category_id INT
     }
 
-    daftar_peminjam {
-        int id
-        int id_peminjam
-        int id_petugas
-        string code_buku
-        date tanggal_pinjam
-        date tanggal_kembali
-        int denda
+    borrow_list {
+        id INT
+        borrower_id INT
+        staff_id INT
+        book_id INT
+        borrow_date DATE
+        return_date DATE
     }
 
-    buku ||--o{ daftar_peminjam : "dipinjam"
-    peminjam ||--o{ daftar_peminjam : "meminjam"
-    petugas ||--o{ daftar_peminjam : "menjaga"
-    kategori ||--o{ buku : "mengelompokkan"
-    kategori ||--o{ rak_buku : "menyimpan"
+    books ||--o{ borrow_list : "borrowed"
+    borrower ||--o{ borrow_list : "borrowing"
+    staff ||--o{ borrow_list : "keeper"
+    category ||--o{ books : "grouping"
+    category ||--o{ bookshelf : "menyimpan"
 
 ```
+
+## FEATURE
+
+- ERD gambaran umum tentang struktur database
+- UP : sql for  create table
+- DOWN : sql for delete table
+- SEED : sql for insert field table
