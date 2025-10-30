@@ -15,14 +15,19 @@ erDiagram
         address TEXT
     }
 
-    category {
+    categories {
         id INT
         name VARCHAR(20)
     }
 
+    books_categories {
+        book_id INT
+        categories_id INT
+    }
+
     bookshelf {
         code VARCHAR(10)
-        category_id INT
+        categories_id INT
     }
 
     books {
@@ -30,7 +35,6 @@ erDiagram
         title VARCHAR(100)
         author VARCHAR(50)
         publication_year INT
-        category_id INT
     }
 
     borrow_list {
@@ -42,11 +46,13 @@ erDiagram
         return_date DATE
     }
 
-    books ||--o{ borrow_list : "borrowed"
-    borrower ||--o{ borrow_list : "borrowing"
-    staff ||--o{ borrow_list : "keeper"
-    category ||--o{ books : "grouping"
-    category ||--o{ bookshelf : "menyimpan"
+    books ||--o{ borrow_list : "1 buku bisa dipinjam dalam waktu yang berbeda"
+    borrower ||--o{ borrow_list : "peminjam bisa meminjam lebih dari sekali"
+    staff ||--o{ borrow_list : "staff yang bertugas saat itu"
+    categories ||--o{ bookshelf : "1 kategori bisa dimiliki beberapa rak buku"
+
+    books_categories ||--o{ books : "1 buku memiliki banyak kategori"
+    books_categories ||--o{ categories : "1 kategori dimiliki beberapa buku"
 
 ```
 
